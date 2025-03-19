@@ -1,0 +1,233 @@
+type AccountLock @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  amount: BigInt! # uint256
+  releaseTime: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AccountRelease @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AddressFrozen @entity(immutable: true) {
+  id: Bytes!
+  _userAddress: Bytes! # address
+  _isFrozen: Boolean! # bool
+  _owner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AgentAdded @entity(immutable: true) {
+  id: Bytes!
+  _agent: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AgentRemoved @entity(immutable: true) {
+  id: Bytes!
+  _agent: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  spender: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ComplianceAdded @entity(immutable: true) {
+  id: Bytes!
+  _compliance: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CurrencySet @entity(immutable: true) {
+  id: Bytes!
+  currency: String! # string
+  tokenAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UserDividends @entity {
+  id: Bytes! # Use the wallet address as the ID
+  transactions: [DividendsClaimed!]! @derivedFrom(field: "user")
+}
+
+type DividendsClaimed @entity(immutable: true) {
+  id: Bytes!
+  user: UserDividends! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type IdentityRegistryAdded @entity(immutable: true) {
+  id: Bytes!
+  _identityRegistry: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LockingTimeUpdated @entity(immutable: true) {
+  id: Bytes!
+  newLockingTime: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Paused @entity(immutable: true) {
+  id: Bytes!
+  _userAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RecoverySuccess @entity(immutable: true) {
+  id: Bytes!
+  _lostWallet: Bytes! # address
+  _newWallet: Bytes! # address
+  _investorOnchainID: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Token @entity {
+  id: Bytes! # Use the token address as the ID
+  priceUpdates: [TokenPriceUpdated!]! @derivedFrom(field: "ContractAddress")
+}
+
+type TokenPriceUpdated @entity(immutable: true) {
+  id: Bytes!
+  ContractAddress: Token! # Relationship to the Token entity
+  newPrice: BigInt! # New price of the token
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokensFrozen @entity(immutable: true) {
+  id: Bytes!
+  _userAddress: Bytes! # address
+  _amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokensUnfrozen @entity(immutable: true) {
+  id: Bytes!
+  _userAddress: Bytes! # address
+  _amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unpaused @entity(immutable: true) {
+  id: Bytes!
+  _userAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdatedSettings @entity(immutable: true) {
+  id: Bytes!
+  minHolding: BigInt! # uint256
+  claimExpiry: BigInt! # uint256
+  claimPeriod: BigInt! # uint256
+  apy: BigInt! # uint256
+  factor: BigInt! # uint256
+  tokenPrice: BigInt! # uint256
+  lockingTime: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdatedTokenInformation @entity(immutable: true) {
+  id: Bytes!
+  Contractaddress: Bytes! # address
+  _newName: String! # string
+  _newSymbol: String! # string
+  _newDecimals: Int! # uint8
+  _newVersion: String! # string
+  _newOnchainID: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type User @entity {
+  id: Bytes! # Use the wallet address as the ID
+  transactions: [TokensPurchased!]! @derivedFrom(field: "user")
+}
+type TokensPurchased @entity(immutable: true) {
+  id: Bytes!
+  user: User! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Meta @entity {
+  id: String! # A single instance with a fixed ID, e.g., "meta"
+  userCount: BigInt! # Tracks the total number of unique users
+  totalTokensPurchased: BigInt! # Tracks the total number of tokens purchased
+  totalTokensHistory: [TotalTokensHistory!]! @derivedFrom(field: "meta")
+}
+
+type TotalTokensHistory @entity(immutable: true) {
+  id: Bytes! # Unique ID for each history record
+  meta: Meta! # Link back to Meta
+  totalTokensPurchased: BigInt! # Total tokens purchased at this moment
+  transactionHash: Bytes! # Transaction hash of this update
+  blockTimestamp: BigInt! # Timestamp when this record was created
+}

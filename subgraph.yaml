@@ -1,0 +1,89 @@
+specVersion: 1.2.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Rptoken
+    network: polygon-amoy
+    source:
+      address: "0xDbb44D86F2CA0971AC27735C1b25DA4D1DAd5Df3"
+      abi: Rptoken
+      startBlock: 18868385
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AccountLock
+        - AccountRelease
+        - AddressFrozen
+        - AgentAdded
+        - AgentRemoved
+        - Approval
+        - ComplianceAdded
+        - CurrencySet
+        - DividendsClaimed
+        - IdentityRegistryAdded
+        - LockingTimeUpdated
+        - OwnershipTransferred
+        - Paused
+        - RecoverySuccess
+        - TokenPriceUpdated
+        - TokensFrozen
+        - TokensPurchased
+        - TokensUnfrozen
+        - Transfer
+        - Unpaused
+        - UpdatedSettings
+        - UpdatedTokenInformation
+      abis:
+        - name: Rptoken
+          file: ./abis/Rptoken.json
+      eventHandlers:
+        - event: AccountLock(indexed address,uint256,uint256)
+          handler: handleAccountLock
+        - event: AccountRelease(indexed address,uint256)
+          handler: handleAccountRelease
+        - event: AddressFrozen(indexed address,indexed bool,indexed address)
+          handler: handleAddressFrozen
+        - event: AgentAdded(indexed address)
+          handler: handleAgentAdded
+        - event: AgentRemoved(indexed address)
+          handler: handleAgentRemoved
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ComplianceAdded(indexed address)
+          handler: handleComplianceAdded
+        - event: CurrencySet(string,address)
+          handler: handleCurrencySet
+        - event: DividendsClaimed(indexed address,uint256)
+          handler: handleDividendsClaimed
+        - event: IdentityRegistryAdded(indexed address)
+          handler: handleIdentityRegistryAdded
+        - event: LockingTimeUpdated(uint256)
+          handler: handleLockingTimeUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RecoverySuccess(address,address,address)
+          handler: handleRecoverySuccess
+        - event: TokenPriceUpdated(indexed address,uint256)
+          handler: handleTokenPriceUpdated
+        - event: TokensFrozen(indexed address,uint256)
+          handler: handleTokensFrozen
+        - event: TokensPurchased(indexed address,uint256,indexed address)
+          handler: handleTokensPurchased
+        - event: TokensUnfrozen(indexed address,uint256)
+          handler: handleTokensUnfrozen
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        - event: UpdatedSettings(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleUpdatedSettings
+        - event: UpdatedTokenInformation(indexed address,string,string,uint8,string,address)
+          handler: handleUpdatedTokenInformation
+      file: ./src/rptoken.ts
